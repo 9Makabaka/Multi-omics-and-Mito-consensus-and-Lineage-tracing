@@ -1,5 +1,4 @@
 # R2py
-@[TOC]
 
 # 一、`young2_RNA.py`
 
