@@ -2,7 +2,7 @@
 
 # 一、`young2_RNA.py`
 
-[young2_RNA.py](young2_RNA.py)
+[young2_RNA.py](young2_ATAC.py)
 
 ## **1.输入文件**
 
@@ -173,35 +173,35 @@ sc.tl.rank_genes_groups(adata, groupby=cluster_key, method='wilcoxon')
 
 `qc_metrics_violin.png`
 
-![qc_metrics_violin.png](qc_metrics_violin.png)
+![qc_metrics_violin.png](result/young2RNA-result/qc_metrics_violin.png)
 
 `highly_variable_genes.png`
 
-![highly_variable_genes.png](highly_variable_genes.png)
+![highly_variable_genes.png](result/young2RNA-result/highly_variable_genes.png)
 
 `pca_variance_ratio.png`
 
-![pca_variance_ratio.png](pca_variance_ratio.png)
+![pca_variance_ratio.png](result/young2RNA-result/pca_variance_ratio.png)
 
 `marker_genes_dotplot.png`
 
-![marker_genes_dotplot.png](marker_genes_dotplot.png)
+![marker_genes_dotplot.png](result/young2RNA-result/marker_genes_dotplot.png)
 
 `umap_qc_metrics.png`
 
-![umap_qc_metrics.png](umap_qc_metrics.png)
+![umap_qc_metrics.png](result/young2RNA-result/umap_qc_metrics.png)
 
 `umap_leiden_r0.5.png`
 
-![umap_leiden_r0.5.png](umap_leiden_r0.5.png)
+![umap_leiden_r0.5.png](result/young2RNA-result/umap_leiden_r0.5.png)
 
 `umap_leiden_r0.8.png`
 
-![umap_leiden_r0.8.png](umap_leiden_r0.8.png)
+![umap_leiden_r0.8.png](result/young2RNA-result/umap_leiden_r0.8.png)
 
 `umap_leiden_r1.0.png`
 
-![umap_leiden_r1.0.png](umap_leiden_r1.0.png)
+![umap_leiden_r1.0.png](result/young2RNA-result/umap_leiden_r1.0.png)
 
 # 二、`young2_ATAC.py`
 
@@ -280,11 +280,11 @@ sc.tl.rank_genes_groups(adata, groupby=cluster_key, method='wilcoxon')
 
 `umap_initial.png`
 
-![umap_initial.png](umap_initial.png)
+![umap_initial.png](result/young2ATAC-result/umap_initial.png)
 
 `umap_leiden.png`
 
-![umap_leiden.png](umap_leiden.png)
+![umap_leiden.png](result/young2ATAC-result/umap_leiden.png)
 
 # 三、`young2_RNA-ATAC.py`
 
@@ -435,9 +435,9 @@ sc.tl.rank_genes_groups(adata, groupby=cluster_key, method='wilcoxon')
 
 ## 4.输出结果
 
-![joint_clustering.png](joint_clustering.png)
+![joint_clustering.png](result/young2-result/figures/joint_clustering.png)
 
-[analysis.log](analysis.log)
+[analysis.log](result/young2-result/logs/analysis.log/analysis.log)
 
 # 四、系统发育树（原R代码）
 
@@ -551,7 +551,7 @@ sc.tl.rank_genes_groups(adata, groupby=cluster_key, method='wilcoxon')
     ```
     
 
-### 1.2**`Create_redeemR`**
+### 1.2`Create_redeemR`
 
 `redeemR` 对象充当一个容器，包含 ReDeeM 数据集的数据（如突变基因型）和分析结果（如克隆距离或系统发育结果）。
 
