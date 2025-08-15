@@ -26,7 +26,8 @@
 - **MoleculeDict**：键为 “分子 ID”（由细胞条形码 + 起始位置 + 结束位置组成，格式：`CellBC_pos_start_pos_end`），值为该分子对应的所有读段对名称。
 
 ```python
-ReadPairDict = {read_name: [read1, read2]}  # 读段名称到双端读段的映射MoleculeDict = {CellBC_Start_End: [read_pair1, ...]}  # 分子到读段对的映射
+ReadPairDict = {read_name: [read1, read2]}  # 读段名称到双端读段的映射
+MoleculeDict = {CellBC_Start_End: [read_pair1, ...]}  # 分子到读段对的映射
 ```
 
 > 这里的 “分子” 指的是同一个 DNA 分子经测序得到的所有读段集合（同一分子的读段应覆盖相同区域）。构建逻辑：
@@ -62,9 +63,12 @@ ReadPairDict = {read_name: [read1, read2]}  # 读段名称到双端读段的映�
 
 ```python
 for read_pair in MoleculeDict[m]:
-    # 分离单链和双链覆盖区域    pos_array_overlap = 重叠区域
-    pos_array_specific_0 = 读段0特有区域    pos_array_specific_1 = 读段1特有区域    # 统计单链支持（仅高质量碱基）    if quality > BaseQ_thld_hi:
-        SG_Genotypes[pos, base] += 1    # 统计双链支持（需双链一致）    if seq0 == seq1 and (quality0 > threshold or quality1 > threshold):
+    # 分离单链和双链覆盖区域
+    pos_array_overlap = 重叠区域
+    pos_array_specific_0 = 读段0特有区域    pos_array_specific_1 = 读段1特有区域    # 统计单链支持（仅高质量碱基）    
+    if quality > BaseQ_thld_hi:
+        SG_Genotypes[pos, base] += 1    # 统计双链支持（需双链一致）    
+        if seq0 == seq1 and (quality0 > threshold or quality1 > threshold):
         DB_Genotypes[pos, base] += 1
 ```
 
@@ -80,7 +84,17 @@ for read_pair in MoleculeDict[m]:
 对每个碱基位置（`i`），基于`SG_Genotypes`和`DB_Genotypes`的总和，计算基因型并判断是否为变异。
 
 ```python
-Cur_Genotype_array = SG + DB  # 合并单双链支持FamSize = sum(Cur_Genotype_array)  # 总支持数Call = argmax(Cur_Genotype_array)   # 最可能碱基CSS = GT_Cts / FamSize             # 共识支持分数# 多级过滤逻辑if DB_Cts > 0:  # 双链支持    VerySensitive: CSS > 0.75 & FamSize >= 1    Specific: CSS > 0.9 & FamSize >= 3else:           # 仅单链支持    VerySensitive: CSS > 0.75 & FamSize >= 2    Specific: CSS > 0.9 & FamSize >= 4
+Cur_Genotype_array = SG + DB  # 合并单双链支持
+FamSize = sum(Cur_Genotype_array)  # 总支持数
+Call = argmax(Cur_Genotype_array)   # 最可能碱基
+CSS = GT_Cts / FamSize             # 共识支持分数
+# 多级过滤逻辑
+if DB_Cts > 0:  # 双链支持    
+    VerySensitive: CSS > 0.75 & FamSize >= 1    
+    Specific: CSS > 0.9 & FamSize >= 3
+else:           # 仅单链支持    
+    VerySensitive: CSS > 0.75 & FamSize >= 2    
+    Specific: CSS > 0.9 & FamSize >= 4
 ```
 
 **1.3.4输出结果**
